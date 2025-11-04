@@ -47,7 +47,7 @@ Meanwhile, the employees in the café corporate office have been challenged to c
 
 
 <div align="center">
-  <img src="https://ux-dundee.github.io/ac51041/images/monolithic-architecture.png" alt="Current Monolithic Architecture" width="600">
+  <img src="https://github.com/laudcharlesochei/aws-course-lab-manual/blob/master/images/scenario-one.png" alt="Current Monolithic Architecture" width="600">
   <br>
   <em>Figure 1: Current monolithic application architecture - all components run as a single unit</em>
 </div>
