@@ -13,18 +13,20 @@
   <script>
     window.$docsify = {
       name: 'My Lab Manual',
-      repo: 'your-github-username/your-repo-name', // Update this!
+      repo: 'your-github-username/your-repo-name',
       sidebar: {
-        '/lab-07/': 'lab-07/',
-        '/unit-08/': 'unit-08/',
-        '/unit-09/': 'unit-09/',
-        '/unit-10/': 'unit-10/',
-        '/unit-11/': 'unit-11/',
-        '/unit-12/': 'unit-12/'
-        // Add more units here as you create them
+        '/unit-01/': 'unit-01/',
+      },
+      // Enable copy code plugin
+      copyCode: {
+        buttonText: 'Copy',
+        errorText: 'Failed',
+        successText: 'Copied!'
       }
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <!-- Add copy code plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
 </body>
 </html>
