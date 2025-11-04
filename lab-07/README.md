@@ -1,4 +1,3 @@
-
 # Unit 1: Introduction to the Web
 
 ## Lab Objectives
@@ -9,15 +8,23 @@
 
 1.  **Open your text editor** and create a new file.
 2.  **Add the basic HTML boilerplate:**
-    ```html
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>My First Page</title>
-    </head>
-    <body>
-        <h1>Hello, World!</h1>
-    </body>
-    </html>
-    ```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My First Page</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>
+```
+
 3.  Save the file as `index.html`.
+
+## How to Copy Code
+- Hover over any code block above
+- Click the "Copy" button that appears in the top-right corner
+- The code will be copied to your clipboard
+- Paste it into your text editor
