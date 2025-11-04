@@ -45,6 +45,13 @@ Meanwhile, the employees in the café corporate office have been challenged to c
 ![Current Monolithic Architecture](./images/scenario-one.png)
 *Figure 1: Current monolithic application architecture showing the single-tier design*
 
+
+<div align="center">
+  <img src="https://ux-dundee.github.io/ac51041/images/monolithic-architecture.png" alt="Current Monolithic Architecture" width="600">
+  <br>
+  <em>Figure 1: Current monolithic application architecture - all components run as a single unit</em>
+</div>
+
 The coffee suppliers application currently runs as a monolithic application. It has reliability and performance issues. That is one of the reasons that you have recently been hired to work in the café corporate office. In this project, you perform tasks that are associated with software development engineer (SDE), app developer, and cloud support engineer roles.
 
 You have been tasked to split the monolithic application into microservices, so that you can scale the services independently and allocate more compute resources to the services that experience the highest demand, with the goal of avoiding bottlenecks. A microservices design will also help avoid single points of failure, which could bring down the entire application in a monolithic design. With services isolated from one another, if one microservice becomes temporarily unavailable, the other microservices might remain available.
