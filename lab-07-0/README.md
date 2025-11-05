@@ -1,4 +1,4 @@
-# Lab 7-1: AWS to GitHub Codespaces Migration
+# Lab 7-0: AWS to GitHub Codespaces Migration
 
 ## Lab Overview
 This lab guides you through migrating a monolithic coffee suppliers application from AWS EC2 to GitHub Codespaces, establishing RDS database connectivity, and setting up a modern development workflow.
