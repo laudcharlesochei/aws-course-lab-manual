@@ -42,7 +42,7 @@ Customers (the café franchise location managers) cannot seem to get enough of t
 
 Meanwhile, the employees in the café corporate office have been challenged to consistently source the highest-quality coffee beans. Recently, the leaders at the corporate office learned that one of their favorite coffee suppliers wants to sell her company. The café corporate managers jumped at the opportunity to buy the company. The acquired coffee supplier runs a coffee supplier listings application on an AWS account.
 
-![Current Monolithic Architecture](./images/scenario-one.png)
+![Current Monolithic Architecture](https://github.com/laudcharlesochei/aws-course-lab-manual/blob/master/images/scenario-one.png)
 *Figure 1: Current monolithic application architecture showing the single-tier design*
 
 
@@ -51,6 +51,13 @@ Meanwhile, the employees in the café corporate office have been challenged to c
   <br>
   <em>Figure 1: Current monolithic application architecture - all components run as a single unit</em>
 </div>
+
+
+<p align="center">
+  <img src="./images/scenario-one.png" alt="Current Monolithic Architecture" style="max-width: 80%; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+  <br>
+  <small><em>Figure 1: Current monolithic architecture - EC2 instance running Node.js application connected to RDS MySQL database</em></small>
+</p>
 
 The coffee suppliers application currently runs as a monolithic application. It has reliability and performance issues. That is one of the reasons that you have recently been hired to work in the café corporate office. In this project, you perform tasks that are associated with software development engineer (SDE), app developer, and cloud support engineer roles.
 
