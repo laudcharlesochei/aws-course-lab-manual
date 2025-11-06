@@ -54,7 +54,7 @@ Meanwhile, the employees in the café corporate office have been challenged to c
 
 
 <p align="center">
-  <img src="https://github.com/laudcharlesochei/aws-course-lab-manual/blob/master/images/scenario-one.png" alt="Current Monolithic Architecture" style="max-width: 80%; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+  <img src="https://raw.githubusercontent.com/laudcharlesochei/aws-course-lab-manual/refs/heads/master/images/scenario-one.png" alt="Current Monolithic Architecture" style="max-width: 80%; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
   <br>
   <small><em>Figure 1: Current monolithic architecture - EC2 instance running Node.js application connected to RDS MySQL database</em></small>
 </p>
