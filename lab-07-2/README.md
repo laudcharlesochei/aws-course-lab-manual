@@ -1,4 +1,4 @@
-# Unit 1: Project Overview and AWS Microservices Implementation
+# Project Overview and AWS Microservices Implementation
 
 ## Project Overview and Objectives
 
