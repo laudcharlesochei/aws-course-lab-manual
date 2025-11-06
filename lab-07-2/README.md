@@ -127,13 +127,3 @@ Core Services:
   - Amazon RDS: Database service
   - IAM: Security and permissions
 ```
-
-**How to Copy Code:**
-- Hover over any code block above
-- Click the "Copy" button that appears in the top-right corner
-- The code will be copied to your clipboard
-- Paste it into your development environment
-
-## Next Steps
-
-Proceed to the next unit to begin Phase 1: Creating your architecture diagram and cost estimate.
