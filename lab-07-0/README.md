@@ -3,8 +3,6 @@
 ## Lab Overview
 This lab guides you through migrating a monolithic coffee suppliers application from AWS EC2 to GitHub Codespaces, establishing RDS database connectivity, and setting up a modern development workflow.
 
-**Lab Duration:** 60-90 minutes  
-**Difficulty Level:** Intermediate  
 **Prerequisites:** Basic AWS knowledge, GitHub account, understanding of Node.js and MySQL
 
 ### Learning Objectives
