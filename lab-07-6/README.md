@@ -17,7 +17,7 @@ Since AWS Cloud9 is no longer available to new customers and AWS has discontinue
 |------------|--------------|------|
 | Customer Microservice | Read-only access to supplier data | 8080 |
 | Employee Microservice | Full CRUD operations with /admin route prefix | 8081 |
-| Database | AWS RDS MySQL or local MySQL instance | â€” |
+| Database | AWS RDS MySQL or local MySQL instance | - |
 
 ---
 
