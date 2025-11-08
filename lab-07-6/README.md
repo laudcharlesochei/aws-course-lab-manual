@@ -196,7 +196,7 @@ module.exports = Supplier;
 ```
 
 ### 3.3 Update Supplier List View (Read-Only)
-- Remove â€œAdd new supplierâ€ button  
+- Remove "Add new supplier" button  
 - Remove edit/delete options  
 - Keep only the supplier display table
 
@@ -310,14 +310,10 @@ docker run -d --name employee_1 -p 8081:8081 --env-file .env employee
 docker ps
 ```
 
-Visit:  
-- Customer: `https://your-codespace-8080.app.github.dev/`  
-- Employee: `https://your-codespace-8081.app.github.dev/admin`
-
 ---
 
 ## Conclusion
-âœ… Both microservices configured and containerized  
-âœ… Database connection verified  
-âœ… Admin panel functional with CRUD operations  
-âœ… Code pushed to GitHub ready for ECS deployment
+Both microservices configured and containerized  
+Database connection verified  
+Admin panel functional with CRUD operations  
+Code pushed to GitHub ready for ECS deployment
