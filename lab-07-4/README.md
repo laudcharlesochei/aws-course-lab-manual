@@ -39,7 +39,6 @@ By the end of this lab, you should be able to:
 
 1. **Navigate to GitHub:**
    - Go to [github.com](https://github.com) and sign in.
-   - Click **â€œ+â€ â†’ â€œNew repositoryâ€**.
    - Click "+" → "New repository"
 
 2. **Configure Repository Settings:**
@@ -47,28 +46,28 @@ By the end of this lab, you should be able to:
    | Setting | Value |
    |----------|-------|
    | Repository Name | `coffee-suppliers-microservices` |
-   | Description | â€œCoffee suppliers application with customer and employee microservicesâ€ |
+   | Description | "Coffee suppliers application with customer and employee microservices" |
    | Visibility | Private |
-   | Initialize with README | âŒ Uncheck |
+   | Initialize with README | ❌ Uncheck |
    | Add .gitignore | None |
    | License | None |
 
 3. **Create Repository:**
-   - Click **â€œCreate repository.â€**
+   - Click "Create repository"
    - Note your repository URL for later.
 
 ---
 
 #### Step 1.1.2: Launch GitHub Codespace
 
-1. In your repository, click **â€œCodeâ€ â†’ â€œCodespacesâ€ tab â†’ â€œCreate codespace on main.â€**  
-2. Wait for provisioning (2â€“3 minutes).  
+1. In your repository, click "Code" → "Codespaces" tab In your repository, click **â€œCodeâ€ â†’ â€œCodespacesâ€ tab â†’ â€œCreate codespace on main.â€**  
+2. Wait for provisioning (2 - 3 minutes).  
    VS Code interface will open in your browser.  
 3. Verify the environment:
 
 ```bash
 # Open terminal in Codespace (Ctrl + `)
-echo "âœ… Codespace environment ready"
+echo "✅ Codespace environment ready"
 pwd  # Should show: /workspaces/coffee-suppliers-microservices
 ls -la
 ```
