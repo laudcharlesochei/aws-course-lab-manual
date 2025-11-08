@@ -3,13 +3,10 @@
 ## Lesson Title
 **AWS to GitHub Codespaces Migration: Direct Code Transfer and Microservices Setup**
 
----
-
 ## Lab Overview
 
-This lab guides students through creating a GitHub Codespaces development environment, transferring a monolithic application directly from AWS EC2 into a structured microservices architecture, and setting up version control with Git. Students will create separate customer and employee microservices directories using identical starter code and test the applicationâ€™s functionality in a cloud environment.
+This lab guides students through creating a GitHub Codespaces development environment, transferring a monolithic application directly from AWS EC2 into a structured microservices architecture, and setting up version control with Git. Students will create separate customer and employee microservices directories using identical starter code and test the application's functionality in a cloud environment.
 
----
 
 ## Prerequisites
 
@@ -43,6 +40,7 @@ By the end of this lab, you should be able to:
 1. **Navigate to GitHub:**
    - Go to [github.com](https://github.com) and sign in.
    - Click **â€œ+â€ â†’ â€œNew repositoryâ€**.
+   - Click "+" → "New repository"
 
 2. **Configure Repository Settings:**
 
