@@ -30,16 +30,16 @@ cd coffee-suppliers-microservices
 ### 1.3 Verify Project Structure
 ```
 microservices/
-â”œâ”€â”€ customer/
-â”‚   â”œâ”€â”€ app/
-â”‚   â”œâ”€â”€ views/
-â”‚   â”œâ”€â”€ index.js
-â”‚   â””â”€â”€ package.json
-â””â”€â”€ employee/
-    â”œâ”€â”€ app/
-    â”œâ”€â”€ views/
-    â”œâ”€â”€ index.js
-    â””â”€â”€ package.json
+├── customer/
+│   ├── app/
+│   ├── views/
+│   ├── index.js
+│   └── package.json
+└── employee/
+    ├── app/
+    ├── views/
+    ├── index.js
+    └── package.json
 ```
 
 ---
