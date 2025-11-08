@@ -1,4 +1,4 @@
-# Lab: Microservices Development, Configuration, and Deployment Using GitHub Codespaces and Docker
+# Lab: Configuring, Deploying and Testing Microservices Using GitHub Codespaces and Docker  
 
 ## Lab Overview
 
