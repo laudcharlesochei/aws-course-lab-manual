@@ -63,7 +63,6 @@ microservices/
 
 ### 2.1 Option A: Connect to AWS RDS Database
 ```bash
-# Install MySQL client in Codespaces
 sudo apt update
 sudo apt install mysql-client -y
 
@@ -77,11 +76,9 @@ mysql -h YOUR_RDS_ENDPOINT -u admin -p -e "SHOW DATABASES;"
 sudo apt update
 sudo apt install mysql-server -y
 
-# Start MySQL service
 sudo service mysql start
 sudo systemctl enable mysql
 
-# Create database and user
 sudo mysql -u root << 'EOF'
 CREATE DATABASE COFFEE;
 CREATE USER 'coffee_user'@'localhost' IDENTIFIED BY 'password';
@@ -154,7 +151,6 @@ const Supplier = function(supplier) {
 Supplier.getAll = result => {
     sql.query("SELECT * FROM suppliers", (err, res) => {
         if (err) {
-            console.log("error: ", err);
             result(null, err);
             return;
         }
@@ -202,7 +198,6 @@ module.exports = Supplier;
 ---
 
 ## Step 4: Modify Employee Microservice (Admin Functions)
-
 **File:** `employee/index.js`
 ```javascript
 require('dotenv').config();
@@ -224,9 +219,8 @@ app.listen(app_port, () => {
 
 ---
 
-## Step 5: Create Docker Containers
-
-### 5.1 Customer Dockerfile
+## Step 5: Docker Configuration
+### Customer Dockerfile
 ```dockerfile
 FROM node:11-alpine
 RUN mkdir -p /usr/src/app
@@ -237,7 +231,7 @@ EXPOSE 8080
 CMD ["npm", "run", "start"]
 ```
 
-### 5.2 Employee Dockerfile
+### Employee Dockerfile
 ```dockerfile
 FROM node:11-alpine
 RUN mkdir -p /usr/src/app
@@ -248,10 +242,14 @@ EXPOSE 8081
 CMD ["npm", "run", "start"]
 ```
 
----
-
-## Step 6: Test Microservices
+### Build and Run Containers
 ```bash
+cd /workspaces/your-repo/microservices/customer
+docker build --tag customer .
+
+cd ../employee
+docker build --tag employee .
+
 docker run -d --name customer_1 -p 8080:8080 --env-file .env customer
 docker run -d --name employee_1 -p 8081:8081 --env-file .env employee
 docker ps
@@ -259,10 +257,30 @@ docker ps
 
 ---
 
-## Conclusion
+## Step 6: Testing and Troubleshooting
 
+- Access in browser via Codespaces:  
+  - Customer: `https://your-codespace-8080.app.github.dev/`  
+  - Employee: `https://your-codespace-8081.app.github.dev/admin`
+
+âœ… Verify supplier list (read-only)  
+âœ… Add/Edit/Delete in admin panel  
+âœ… Database connection verified via logs
+
+---
+
+## Step 7: Commit and Push to GitHub
+```bash
+git add .
+git commit -m "feat: Microservices decomposition and Docker setup"
+git push origin main
+```
+
+---
+
+## Conclusion
 âœ… Customer microservice (read-only, port 8080)  
 âœ… Employee microservice (CRUD under /admin, port 8081)  
-âœ… Docker images running successfully  
-âœ… Database connectivity verified  
-âœ… Pushed to GitHub for deployment
+âœ… Docker containers tested and functional  
+âœ… Database connected and verified  
+âœ… All updates committed and pushed to GitHub
