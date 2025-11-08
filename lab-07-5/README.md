@@ -1,8 +1,8 @@
 # Lab 07-4: Configuring Microservices and Testing in Docker Containers
 
 ## Lab Overview
-In this phase, you will transform the **monolithic coffee suppliers application** into two separate microservices â€” **customer** and **employee** â€” containerize them using **Docker**, and test them locally. 
-This setup replaces AWS Cloud9 with **GitHub Codespaces** and uses **Docker Desktop** for local container testing.
+In this phase, you will transform the **monolithic coffee suppliers application** into two separate microservices(customer and employee) containerize them using Docker, and test them locally. 
+This setup replaces AWS Cloud9 with GitHub Codespaces and uses Docker Desktop for local container testing.
 
 ---
 
