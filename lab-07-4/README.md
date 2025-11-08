@@ -48,7 +48,7 @@ By the end of this lab, you should be able to:
    | Repository Name | `coffee-suppliers-microservices` |
    | Description | "Coffee suppliers application with customer and employee microservices" |
    | Visibility | Private |
-   | Initialize with README | ❌ Uncheck |
+   | Initialize with README | Uncheck |
    | Add .gitignore | None |
    | License | None |
 
@@ -67,7 +67,7 @@ By the end of this lab, you should be able to:
 
 ```bash
 # Open terminal in Codespace (Ctrl + `)
-echo "✅ Codespace environment ready"
+echo "Codespace environment ready"
 pwd  # Should show: /workspaces/coffee-suppliers-microservices
 ls -la
 ```
@@ -95,7 +95,7 @@ EOF
 
 # Set secure permissions
 chmod 600 ~/.ssh/labsuser.pem
-echo "✅ SSH key configured"
+echo "SSH key configured"
 ```
 
 ---
@@ -108,7 +108,7 @@ mkdir -p microservices/customer
 mkdir -p microservices/employee
 
 # Verify structure
-echo "✅ Microservices directory structure created:"
+echo "Microservices directory structure created:"
 tree microservices -L 2
 ```
 
