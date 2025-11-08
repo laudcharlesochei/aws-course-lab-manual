@@ -1,4 +1,4 @@
-# Phase 8 & 9: Configuring CodeDeploy, CodePipeline, and Microservice Updates
+# Configuring CodeDeploy, CodePipeline, and Microservice Updates
 
 ## Lab Overview
 In these final phases, you will configure AWS CodeDeploy and CodePipeline for automated blue/green deployments, then modify your microservice code to trigger pipeline executions. This demonstrates the full CI/CD capabilities of your microservices architecture.
