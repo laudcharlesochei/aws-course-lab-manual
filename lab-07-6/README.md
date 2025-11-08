@@ -47,14 +47,14 @@ git config --list
 Verify file structure:
 ```
 microservices/
-â”œâ”€â”€ customer/
-â”‚   â”œâ”€â”€ app/
-â”‚   â”œâ”€â”€ views/
-â”‚   â””â”€â”€ package.json
-â””â”€â”€ employee/
-    â”œâ”€â”€ app/
-    â”œâ”€â”€ views/
-    â””â”€â”€ package.json
+├── customer/
+│   ├── app/
+│   ├── views/
+│   └── package.json
+└── employee/
+    ├── app/
+    ├── views/
+    └── package.json
 ```
 
 ---
