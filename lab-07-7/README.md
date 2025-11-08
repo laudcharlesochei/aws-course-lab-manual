@@ -1,4 +1,5 @@
-# Phase 4: Using VS Code with GitHub Codespaces for Microservices Deployment
+# Phase 4: Using VS Code with GitHub Codespaces for Microservices Deployment              Configuring Microservices and Testing in Docker Containers
+
 
 ## Lab Overview
 This lab guides you through decomposing a monolithic coffee suppliers application into two microservices (customer-facing and employee/admin) and containerizing them using Docker.  
