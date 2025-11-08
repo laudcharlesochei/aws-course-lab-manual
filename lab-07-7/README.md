@@ -1,1129 +1,612 @@
 # Configuring Microservices and Testing in Docker Containers
 
-# Phase 4: Using GitHub Codespaces with GitHub Codespaces for Microservices Deployment
+This lab uses **GitHub Codespaces** as the development environment and **GitHub** for version control.
 
-## Lab Overview
-
-This lab guides you through decomposing a monolithic coffee suppliers application into two microservices (customer-facing and employee/admin) and containerizing them using Docker.
-
-Since AWS Cloud9 is no longer available to new customers and AWS has discontinued onboarding new customers to CodeCommit, we'll use **GitHub Codespaces** as our development environment and **GitHub** for version control.
-
-### Key Technologies Used
-
-- GitHub Codespaces (Cloud Development Environment)
-
-- GitHub Codespaces
-
-- Docker Containers
-
-- Node.js Microservices
-
-- MySQL Database (AWS RDS or Local)
-
-- GitHub for Version Control
-
-### Architecture Overview
-
-| Component | Description | Port |
-
-|------------|--------------|------|
-
-| Customer Microservice | Read-only access to supplier data | 8080 |
-
-| Employee Microservice | Full CRUD operations with /admin route prefix | 8081 |
-
-| Database | AWS RDS MySQL or local MySQL instance | - |
-
----
-
-## Step 1: Environment Setup in GitHub Codespaces
-
-### 1.1 Access GitHub Codespaces
-
+Phase 4: Using VS
+Code with GitHub
+Codespaces for Codespace
+Microservices
+Dep loyment
+Lab Overview
+This lab guides you through decomposing a
+monolithic coffee suppliers application into two
+microservices (customer-facing and
+employee/admin) and containerizing them using
+Docker.
+Since AWS Cloud9 is no longer available to new
+customers and AWS has discontinued
+onboarding new customers to CodeCommit,
+we'll use GitHub Codespaces Codespace as our
+development environment and GitHub for
+version control.
+Key Technologies Used
+GitHub Codespaces (Cloud Development Codespace
+Environment)
+GitHub Codespaces
+Docker Containers
+Node.js Microservices
+MySQL Database (AWS RDS or Local)
+GitHub for Version Control
+Architecture Overview08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 1/11
+Component Description Port
+Customer
+MicroserviceRead-only access
+to supplier data8080
+Employee
+MicroserviceFull CRUD
+operations with
+/admin route
+prefix8081
+DatabaseAWS RDS MySQL
+or local MySQL
+instance-
+Step 1: Environment
+Setup in GitHub
+Codespaces Codespace
+1.1 Access GitHub Codespaces Codespace
 1. Navigate to your GitHub repository
-
-2. Click the **Code** button and select the **Codespaces** tab
-
-3. Click **Create codespace on main**
-
+2. Click the Code button and select the
+Codespaces Codespace tab
+3. Click Create codespace on main codespace
 4. Wait for the environment to initialize
-
-### 1.2 Verify Development Environment
-
-```bash
-
+1.2 Verify Dev elopment
+Environment
 # Check Node.js and npm versions
-
 node --version
-
 npm --version
-
 # Verify Git configuration
-
-git config --list
-
-```
-
-### 1.3 Upload Project Files to Codespaces
-
-- In Codespaces File Explorer, right-click and select **Upload**
-
-- Select your project files/folders from your local machine
-
-- Alternatively, drag and drop files directly into the file explorer
-
+git config --listbash08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 2/11
+1.3 Upload Project Files to
+Codespaces Codespace
+In Codespaces File Explorer, right-click and Codespace
+select Upload
+Select your project files/folders from your
+local machine
+Alternatively, drag and drop files directly
+into the file explorer
 Verify file structure:
-
-```
-
-microservices/
-
+Step 2: Database
+Configuration
+2.1 Option A: Connect to AWS
+RDS Databasemicroservices/
 â”œâ”€â”€ customer/
-
 â”‚   â”œâ”€â”€ app/
-
 â”‚   â”œâ”€â”€ views/
-
 â”‚   â””â”€â”€ package.json
-
 â””â”€â”€ employee/
-
-â”œâ”€â”€ app/
-
-â”œâ”€â”€ views/
-
-â””â”€â”€ package.json
-
-```
-
----
-
-## Step 2: Database Configuration
-
-### 2.1 Option A: Connect to AWS RDS Database
-
-```bash
-
+    â”œâ”€â”€ app/
+    â”œâ”€â”€ views/
+    â””â”€â”€ package.json
 sudo apt update
-
 sudo apt install mysql-client -y
-
-# Test RDS connection
-
-mysql -h YOUR_RDS_ENDPOINT -u admin -p -e "SHOW DATABASES;"
-
+# Test RDS connectionbash08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 3/11
+2.2 Option B: Set Up Local
+MySQL Databasemysql -h YOUR_RDS_ENDPOINT -u adm
 # Password: lab-password
-
-```
-
-### 2.2 Option B: Set Up Local MySQL Database
-
-```bash
-
 sudo apt update
-
 sudo apt install mysql-server -y
-
 sudo service mysql start
-
 sudo systemctl enable mysql
-
 sudo mysql -u root << 'EOF'
-
 CREATE DATABASE COFFEE;
-
-CREATE USER 'coffee_user'@'localhost' IDENTIFIED BY 'password';
-
-GRANT ALL PRIVILEGES ON COFFEE.* TO 'coffee_user'@'localhost';
-
+CREATE USER 'coffee_user'@'localho
+GRANT ALL PRIVILEGES ON COFFEE.* T
 FLUSH PRIVILEGES;
-
 USE COFFEE;
-
 CREATE TABLE suppliers (
-
-id INT AUTO_INCREMENT PRIMARY KEY,
-
-name VARCHAR(255) NOT NULL,
-
-email VARCHAR(255),
-
-phone VARCHAR(50),
-
-description TEXT,
-
-address VARCHAR(255),
-
-city VARCHAR(100),
-
-state VARCHAR(50),
-
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
+    id INT AUTO_INCREMENT PRIMARY 
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(50),
+    description TEXT,
+    address VARCHAR(255),
+    city VARCHAR(100),
+    state VARCHAR(50),
+    created_at TIMESTAMP DEFAULT C
 );
-
-INSERT INTO suppliers (name, email, phone, description, address, city, state) VALUES
-
-('Mountain Coffee Co.', 'contact@mountaincoffee.com', '555-0101', 'Organic mountain-grown beans', '123 Mountain Rd', 'Denver', 'CO'),
-
-('Valley Roasters', 'info@valleyroasters.com', '555-0102', 'Premium dark roast specialists', '456 Valley Ave', 'Seattle', 'WA'),
-
-('Urban Brew', 'sales@urbanbrew.com', '555-0103', 'Fair trade urban coffee', '789 City St', 'Portland', 'OR');
-
-EOF
-
-```
-
-### 2.3 Configure Environment Variables
-
-Create `.env` files for both microservices:
-
-**Customer Microservice (.env):**
-
-```bash
-
-cd /workspaces/your-repo/microservices/customer
-
+INSERT INTO suppliers (name, emai
+('Mountain Coffee Co.', 'contact@m
+('Valley Roasters', 'info@valleyro
+('Urban Brew', 'sales@urbanbrew.co
+EOFbash08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 4/11
+2.3 Configure Environment
+Variables
+Create .env files for both microservices:
+Customer Microservice (.env):
+Employee Microservice (.env):
+Step 3: Modify Customer
+Microservice (Read-Only)
+3.1 Update Supplier Model
+File:
+customer/app/models/supplier.model.jscd /workspaces/your-repo/microserv
 cat > .env << 'EOF'
-
 APP_DB_HOST=localhost
-
 APP_DB_USER=coffee_user
-
 APP_DB_PASSWORD=password
-
 APP_DB_NAME=COFFEE
-
 APP_PORT=8080
-
-EOF
-
-```
-
-**Employee Microservice (.env):**
-
-```bash
-
+EOFbash
 cd ../employee
-
 cat > .env << 'EOF'
-
 APP_DB_HOST=localhost
-
 APP_DB_USER=coffee_user
-
 APP_DB_PASSWORD=password
-
 APP_DB_NAME=COFFEE
-
 APP_PORT=8081
-
-EOF
-
-```
-
----
-
-## Step 3: Modify Customer Microservice (Read-Only)
-
-### 3.1 Update Supplier Model
-
-**File:** `customer/app/models/supplier.model.js`
-
-```javascript
-
-const sql = require("./db.js");
-
-const Supplier = function(supplier) {
-
-this.name = supplier.name;
-
-this.email = supplier.email;
-
-this.phone = supplier.phone;
-
-this.description = supplier.description;
-
+EOFbash08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 5/11
+3.2 Update Navigation
+File: customer/views/nav.html sql  
+   
+    name  suppliername
+    email  supplieremail
+    phone  supplierphone
+    description  supplierd
+Supplier     
+    sql
+         err 
+             err
+            
+        
+         res
+    
+Supplier    
+    sql
+         err 
+            err 
+            
+        
+         reslength 
+             res
+            
+        
+          
+    
+moduleexports  Supplierconst=require("./db.js");
+constSupplier=function(supplie
+this.= .;
+this.= .;
+this.= .;
+this. = .
 };
-
-Supplier.getAll = result => {
-
-sql.query("SELECT * FROM suppliers", (err, res) => {
-
-if (err) {
-
-result(null, err);
-
+.getAll=result=>{
+.query("SELECT * FROM supp
+if(){
+result(null,);
 return;
-
 }
-
-result(null, res);
-
+result(null,);
 });
-
 };
-
-Supplier.findById = (id, result) => {
-
-sql.query(`SELECT * FROM suppliers WHERE id = ${id}`, (err, res) => {
-
-if (err) {
-
-result(err, null);
-
+.findById=(id result, )
+.query(`SELECT * FROM supp
+if(){
+result(,null);
 return;
-
 }
-
-if (res.length) {
-
-result(null, res[0]);
-
+if(.){
+result(null,[0]);
 return;
-
 }
-
-result({ kind: "not_found" }, null);
-
+result({kind:"not_found
 });
-
 };
-
-module.exports = Supplier;
-
-```
-
-### 3.2 Update Navigation
-
-**File:** `customer/views/nav.html`
-
-```html
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-<a class="navbar-brand" href="#">Coffee suppliers</a>
-
-<button class="navbar-toggler" type="button" data-toggle="collapse"
-
-data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-
-aria-expanded="false" aria-label="Toggle navigation">
-
-<span class="navbar-toggler-icon"></span>
-
-</button>
-
-<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-<div class="navbar-nav">
-
-<a class="nav-link" href="/">Customer home</a>
-
-<a class="nav-link" href="/suppliers">List of suppliers</a>
-
-<a class="nav-link" href="/admin/suppliers">Administrator link</a>
-
-</div>
-
-</div>
-
-</nav>
-
-```
-
-### 3.3 Update Supplier List View (Read-Only)
-
-- Remove "Add new supplier" button
-
-- Remove edit/delete options
-
-- Keep only the supplier display table
-
----
-
-## Step 4: Modify Employee Microservice (Admin Functions)
-
-### 4.1 Update Employee Controller
-
-**File:** `employee/app/controller/supplier.controller.js`
-
-Update all redirect calls to use `/admin` prefix:
-
-```javascript
-
-// Change all redirects from:
-
-res.redirect("/suppliers");
-
+. = ;javascript08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 6/11
+3.3 Update Supplier List View
+(Read-Only)
+Remove "Add new supplier" button
+Remove edit/delete options
+Keep only the supplier display table
+Step 4: Modify Employee
+Microservice (Admin
+Functions)
+4.1 Update Employee
+Controller
+File:
+employee/app/controller/supplier.controller.js
+Update all redirect calls to use /admin prefix:    
+    
+        
+    
+    
+        
+            
+            
+            
+        
+     nav<classnavbar navbar-expand- ="
+  a<classnavbar-brand =" "href=
+ 
+            
+             button< classnavbar-toggler ="
+data-target#navbarN ="
+aria-expandedfalse=""
+ span<classnavbar-toggl ="
+button</>
+ div<classcollapse navbar-co ="
+ div<classnavbar-nav =" ">
+  a<classnav-link =" "h
+  a<classnav-link =" "h
+  a<classnav-link =" "h
+div</>
+div</>
+nav</>html08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 7/11
+4.2 Update Employee Routes
+File: employee/index.js
+4.3 Update Employee Viewsres
+res// Change all redirects from:
+.redirect("/suppliers");
 // To:
-
-res.redirect("/admin/suppliers");
-
-```
-
-### 4.2 Update Employee Routes
-
-**File:** `employee/index.js`
-
-```javascript
-
-require('dotenv').config();
-
-const express = require("express");
-
+.redirect("/admin/suppliers");javascript
+ express  
+app    
+    res  
+app  supp
+app  
+    res  
+app  s
+app
+app
+app
+ app_port  processenv
+app app_port   
+    consolerequire('dotenv').config();
+const =require("express"
 // ... other imports
-
 // ADD /admin PREFIX TO ALL ROUTES
-
-app.get("/admin", (req, res) => {
-
-res.render("home", {});
-
+.get("/admin",(req res,)=>{
+.render("home",{});
 });
-
-app.get("/admin/suppliers/", supplier.findAll);
-
-app.get("/admin/supplier-add", (req, res) => {
-
-res.render("supplier-add", {});
-
+.get("/admin/suppliers/",
+.get("/admin/supplier-add",(r
+.render("supplier-add",{}
 });
-
-app.post("/admin/supplier-add", supplier.create);
-
-app.get("/admin/supplier-update/:id", supplier.findOne);
-
-app.post("/admin/supplier-update", supplier.update);
-
-app.post("/admin/supplier-remove/:id", supplier.remove);
-
+.post("/admin/supplier-add",
+.get("/admin/supplier-update/:
+.post("/admin/supplier-update"
+.post("/admin/supplier-remove/
 // Update port
-
-const app_port = process.env.APP_PORT || 8081;
-
-app.listen(app_port, () => {
-
-console.log(`Coffee suppliers employee microservice is running on port ${app_port}.`);
-
-});
-
-```
-
-### 4.3 Update Employee Views
-
-Update form actions in HTML files to use `/admin` prefix:
-
-**File:** `employee/views/supplier-add.html`
-
-```html
-
-<form action="/admin/supplier-add" method="POST">
-
-```
-
-**File:** `employee/views/supplier-update.html`
-
-```html
-
-<form action="/admin/supplier-update" method="POST">
-
-<form action="/admin/supplier-remove/{{id}}" method="POST">
-
-```
-
-### 4.4 Update Employee Navigation
-
-**File:** `employee/views/nav.html`
-
-```html
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-<img src="/img/espresso.jpg" width="200">
-
-<div><a class="navbar-brand page-title" href="/admin">Manage coffee suppliers</a></div>
-
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-<ul class="navbar-nav mr-auto">
-
-<li class="nav-item active">
-
-<a class="nav-link" href="/admin/suppliers">Administrator home</a>
-
-<a class="nav-link" href="/admin/suppliers">Suppliers list</a>
-
-<a class="nav-link" href="/">Customer home</a>
-
-</li>
-
-</ul>
-
-</div>
-
-</nav>
-
-```
-
----
-
-## Step 5: Create Docker Containers
-
-**Customer Dockerfile:**
-
-```dockerfile
-
-FROM node:11-alpine
-
+const = ..APP_
+.listen( ,()=>{
+.log(`Coffee suppliers 
+});javascript08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 8/11
+Update form actions in HTML files to use
+/admin prefix:
+File: employee/views/supplier-add.html
+File: employee/views/supplier-
+update.html
+4.4 Update Employee
+Navigation
+File: employee/views/nav.html form<action/admin/supplier-add ="html
+ form<action/admin/supplier-upd ="
+ form<action/admin/supplier-remo ="html
+    
+    
+    
+        
+            
+                
+                
+                
+            
+        
+     nav<classnavbar navbar-expand- ="
+  img<src/img/espresso.jpg =" "w
+div<> a<classnavbar-brand p ="
+ div<classcollapse navbar-co ="
+ ul<classnavbar-nav mr- ="
+ li<classnav-item a ="
+ a<classnav-lin ="
+ a<classnav-lin ="
+ a<classnav-lin ="
+li</>
+ul</>
+div</>
+nav</>html08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 9/11
+Step 5: Create Docker
+Containers
+Customer Dockerfile:
+Employee Dockerfile:
+Step 6: Test and VerifyFROM node:11-alpine
 RUN mkdir -p /usr/src/app
-
 WORKDIR /usr/src/app
-
 COPY . .
-
 RUN npm install
-
 EXPOSE 8080
-
-CMD ["npm", "run", "start"]
-
-```
-
-**Employee Dockerfile:**
-
-```dockerfile
-
+CMD ["npm", "run", "start"]dockerfile
 FROM node:11-alpine
-
 RUN mkdir -p /usr/src/app
-
 WORKDIR /usr/src/app
-
 COPY . .
-
 RUN npm install
-
 EXPOSE 8081
-
-CMD ["npm", "run", "start"]
-
-```
-
----
-
-## Step 6: Test and Verify
-
-```bash
-
-docker build --tag customer ./customer
-
-docker build --tag employee ./employee
-
-docker run -d --name customer_1 -p 8080:8080 --env-file .env customer
-
-docker run -d --name employee_1 -p 8081:8081 --env-file .env employee
-
-docker ps
-
-```
-
----
-
-## Conclusion
-
-Both microservices configured and containerized
-
+CMD ["npm", "run", "start"]dockerfile
+docker build --tag customer ./cus
+docker build --tag employee ./emp
+docker run -d --name customer_1 -
+docker run -d --name employee_1 -
+docker psbash08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 10/11
+Conclusion
+Both microservices configured and
+containerized
 Database connection verified
-
 Admin panel functional with CRUD operations
+Code pushed to GitHub ready for ECS
+deployment08/11/2025, 20:39 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-6/ 11/11
 
-Code pushed to GitHub ready for ECS deployment
 
-# Lab 07-4: Configuring Microservices and Testing in Docker Containers
-
-## Lab Overview
-
-In this phase, you will transform the **monolithic coffee suppliers application** into two separate microservices(customer and employee) containerize them using Docker, and test them locally.
-
-This setup replaces AWS Cloud9 with GitHub Codespaces and uses Docker Desktop for local container testing.
-
----
-
-## Prerequisites
-
+Lab 07-4: Configuring
+Microservices and
+Testing in Docker
+Containers
+Lab Overview
+In this phase, you will transform the monolithic
+coffee suppliers application into two separate
+microservices(customer and employee)
+containerize them using Docker, and test them
+locally. This setup replaces AWS Cloud9 with
+GitHub Codespaces and uses Docker Desktop for
+local container testing.
+Prerequisites
 Before beginning, ensure you have:
-
-- A **GitHub account** with repository access
-
-- **Docker Desktop** installed locally
-
-- **GitHub Codespaces** with the Docker extension
-
-- Basic knowledge of **Node.js** and **Docker**
-
----
-
-## Step 1: Environment Setup
-
-### 1.1 Clone Your Repository
-
-```bash
-
-git clone https://github.com/YOUR_USERNAME/coffee-suppliers-microservices.git
-
-cd coffee-suppliers-microservices
-
-```
-
-### 1.2 Open in GitHub Codespaces or Codespaces
-
-- **Option A (Local):** Open the folder in GitHub Codespaces.
-
-- **Option B (Codespaces):** Create a new codespace from your GitHub repository.
-
-### 1.3 Verify Project Structure
-
-```
-
+A GitHub account with repository access
+Docker Desktop installed locally
+GitHub Codespaces with the Docker extension
+Basic knowledge of Node.js and Docker
+Step 1: Environment
+Setup
+1.1 Clone Your Repository08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 1/13
+1.2 Open in GitHub Codespaces or
+Codespaces
+Option A (Local): Open the folder in VS
+Code.
+Option B (Codespaces): Create a new
+codespace from your GitHub repository.
+1.3 Verify Project Structure
+Step 2: Modify Customer
+Microservice (Read-Only)
+2.1 Update Customer
+Controllergit clone https://github.com/YOUR
+cd coffee-suppliers-microservicesbash
 microservices/
-
 â”œâ”€â”€ customer/
-
 â”‚   â”œâ”€â”€ app/
-
 â”‚   â”œâ”€â”€ views/
-
 â”‚   â”œâ”€â”€ index.js
-
 â”‚   â””â”€â”€ package.json
-
 â””â”€â”€ employee/
-
-â”œâ”€â”€ app/
-
-â”œâ”€â”€ views/
-
-â”œâ”€â”€ index.js
-
-â””â”€â”€ package.json
-
-```
-
----
-
-## Step 2: Modify Customer Microservice (Read-Only)
-
-### 2.1 Update Customer Controller
-
-**File:** `customer/app/controller/supplier.controller.js`
-
-```javascript
-
-const Supplier = require("../models/supplier.model.js");
-
-const { body, validationResult } = require("express-validator");
-
-exports.findAll = (req, res) => {
-
-Supplier.getAll((err, data) => {
-
-if (err)
-
-res.render("500", { message: "There was a problem retrieving the list of suppliers" });
-
+    â”œâ”€â”€ app/
+    â”œâ”€â”€ views/
+    â”œâ”€â”€ index.js
+    â””â”€â”€ package.json08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 2/13
+File:
+customer/app/controller/supplier.controller.js
+2.2 Update Customer Model
+File:
+customer/app/models/supplier.model.js
+Keep: Supplier.getAll,
+Supplier.findById
+Remove: Supplier.create,
+Supplier.updateById,
+Supplier.remove Supplier  
+  body validationResult  
+exports     
+  Supplier   
+     err
+      res   
+    
+      res
+  
+exports     
+  Supplier reqparamsid
+     err 
+       errkind  
+        res  
+        
+        res   
+      
+      res
+  const =require("../mode
+const{, }
+.findAll=(req res,)=>{
+.getAll((err data,)=>
+if()
+.render("500",{message
 else
-
-res.render("supplier-list-all", { suppliers: data });
-
+.render("supplier-list-a
 });
-
 };
-
-exports.findOne = (req, res) => {
-
-Supplier.findById(req.params.id, (err, data) => {
-
-if (err) {
-
-if (err.kind === "not_found") {
-
-res.status(404).send({ message: `Not found Supplier with id ${req.params.id}.` });
-
-} else {
-
-res.render("500", { message: `Error retrieving Supplier with id ${req.params.id}` });
-
+.findOne=(req res,)=>{
+.findById(..
+if(){
+if(.==="not_found
+.status(404).send({me
+}else{
+.render("500",{messa
 }
-
-} else res.render("supplier-update", { supplier: data });
-
+}else.render("supplier-u
 });
-
-};
-
-```
-
-### 2.2 Update Customer Model
-
-**File:** `customer/app/models/supplier.model.js`
-
-- **Keep:** `Supplier.getAll`, `Supplier.findById`
-
-- **Remove:** `Supplier.create`, `Supplier.updateById`, `Supplier.remove`
-
-### 2.3 Update Customer Navigation
-
-**File:** `customer/views/nav.html`
-
-```html
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-<a class="navbar-brand" href="#">Coffee suppliers</a>
-
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
-
-<span class="navbar-toggler-icon"></span>
-
-</button>
-
-<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-<div class="navbar-nav">
-
-<a class="nav-link" href="/">Customer home</a>
-
-<a class="nav-link" href="/suppliers">List of suppliers</a>
-
-<a class="nav-link" href="/admin/suppliers">Administrator link</a>
-
-</div>
-
-</div>
-
-</nav>
-
-```
-
-### 2.4 Update Customer Views
-
-**File:** `customer/views/supplier-list-all.html`
-
-- Remove "Add a new supplier" button
-
-- Remove edit/delete action buttons
-
-- Keep only the read-only table of supplier information
-
-**Delete these files:**
-
-`supplier-add.html`, `supplier-form-fields.html`, `supplier-update.html`
-
-### 2.5 Update Customer Configuration
-
-**File:** `customer/index.js`
-
-```javascript
-
-// Read-only routes
-
-app.get("/", (req, res) => res.render("home", {}));
-
-app.get("/suppliers/", supplier.findAll);
-
-app.get("/supplier-update/:id", supplier.findOne);
-
+};javascript08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 3/13
+2.3 Update Customer
+Navigation
+File: customer/views/nav.html
+2.4 Update Customer Views
+File: customer/views/supplier-list-
+all.html
+Remove "Add a new supplier" button
+Remove edit/delete action buttons
+Keep only the read-only table of supplier
+information
+Delete these files: supplier-add.html,
+supplier-form-fields.html, supplier-
+update.html
+2.5 Update Customer
+Configuration
+File: customer/index.js  
+  
+    
+  
+  
+    
+      
+      
+      
+    
+   nav<classnavbar navbar-expand- ="
+  a<classnavbar-brand =" "href#="
+  button< classnavbar-toggler =" "
+ span<classnavbar-toggler-i ="
+button</>
+ div<classcollapse navbar-col ="
+ div<classnavbar-nav =" ">
+  a<classnav-link =" "href/="
+  a<classnav-link =" "href/="
+  a<classnav-link =" "href/="
+div</>
+div</>
+nav</>html08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 4/13
+Step 3: Modify Employee
+Microservice (Admin
+Functions)
+3.1 Update Employee
+Controller
+File:
+employee/app/controller/supplier.controller.js
+Update redirect paths:app    res
+app  supplierf
+app  s
+ app_port  processenv
+app app_port   
+  console// Read-only routes
+.get("/",(req res,)=>.re
+.get("/suppliers/", .
+.get("/supplier-update/:id",
 // Comment out write operations
-
 // app.get("/supplier-add", ...);
-
-// app.post("/supplier-add", ...);
-
-// app.post("/supplier-update", ...);
-
-// app.post("/supplier-remove/:id", ...);
-
+// app.post("/supplier-add", ...)
+// app.post("/supplier-update", .
+// app.post("/supplier-remove/:id
 // Set port for Docker
-
-const app_port = process.env.APP_PORT || 8080;
-
-app.listen(app_port, () => {
-
-console.log(`Coffee suppliers customer microservice is running on port ${app_port}.`);
-
-});
-
-```
-
----
-
-## Step 3: Modify Employee Microservice (Admin Functions)
-
-### 3.1 Update Employee Controller
-
-**File:** `employee/app/controller/supplier.controller.js`
-
-Update redirect paths:
-
-```javascript
-
-// BEFORE
-
-res.redirect('/suppliers');
-
-// AFTER
-
-res.redirect('/admin/suppliers');
-
-```
-
-### 3.2 Update Employee Routes
-
-**File:** `employee/index.js`
-
-```javascript
-
-// Admin-prefixed routes
-
-app.get('/admin/suppliers', suppliers.findAll);
-
-app.get('/admin/supplier-update/:id', suppliers.findOne);
-
-app.get('/admin/supplier-add', (req, res) => res.render('supplier-add', {}));
-
-app.post('/admin/supplier-add', suppliers.create);
-
-app.post('/admin/supplier-update', suppliers.update);
-
-app.post('/admin/supplier-remove/:id', suppliers.remove);
-
+const = ..APP_
+.listen( ,()=>{
+.log(`Coffee suppliers c
+});javascript
+res// BEFORE
+.redirect('/suppliers');javascript08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 5/13
+3.2 Update Employee Routes
+File: employee/index.js
+3.3 Update Employee Views
+Update form actions and navigation links to use
+/admin prefix.
+3.4 Update Employee
+Navigation
+File: employee/views/nav.htmlres// AFTER
+.redirect('/admin/suppliers');
+app  suppl
+app
+app  
+app  s
+app
+app
+app    r
+ app_port  processenv
+app app_port   
+  console// Admin-prefixed routes
+.get('/admin/suppliers',
+.get('/admin/supplier-update/:
+.get('/admin/supplier-add',(r
+.post('/admin/supplier-add',
+.post('/admin/supplier-update'
+.post('/admin/supplier-remove/
 // Home route
-
-app.get('/admin', (req, res) => res.render('home'));
-
+.get('/admin',(req res,)=>
 // Port for local testing
-
-const app_port = process.env.APP_PORT || 8081;
-
-app.listen(app_port, () => {
-
-console.log(`Coffee suppliers employee microservice is running on port ${app_port}.`);
-
-});
-
-```
-
-### 3.3 Update Employee Views
-
-Update form actions and navigation links to use `/admin` prefix.
-
-### 3.4 Update Employee Navigation
-
-**File:** `employee/views/nav.html`
-
-```html
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-<a class="navbar-brand" href="#">Manage coffee suppliers</a>
-
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
-
-<span class="navbar-toggler-icon"></span>
-
-</button>
-
-<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-<div class="navbar-nav">
-
-<a class="nav-link" href="/admin/suppliers">Administrator home</a>
-
-<a class="nav-link" href="/admin/supplier-add">Add a new supplier</a>
-
-<a class="nav-link" href="/">Customer home</a>
-
-</div>
-
-</div>
-
-</nav>
-
-```
-
----
-
-## Step 4: Docker Container Setup
-
-### 4.1 Create Customer Dockerfile
-
-**File:** `customer/Dockerfile`
-
-```dockerfile
-
+const = ..APP_
+.listen( ,()=>{
+.log(`Coffee suppliers em
+});javascript08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 6/13
+Step 4: Docker Container
+Setup
+4.1 Create Customer
+Dockerfile
+File: customer/Dockerfile
+4.2 Create Employee
+Dockerfile  
+  
+    
+  
+  
+    
+      
+      
+      
+    
+   nav<classnavbar navbar-expand- ="
+  a<classnavbar-brand =" "href#="
+  button< classnavbar-toggler =" "
+ span<classnavbar-toggler-i ="
+button</>
+ div<classcollapse navbar-col ="
+ div<classnavbar-nav =" ">
+  a<classnav-link =" "href/="
+  a<classnav-link =" "href/="
+  a<classnav-link =" "href/="
+div</>
+div</>
+nav</>html
 FROM node:11-alpine
-
 RUN mkdir -p /usr/src/app
-
 WORKDIR /usr/src/app
-
 COPY . .
-
 RUN npm install
-
 EXPOSE 8080
-
-CMD ["npm", "run", "start"]
-
-```
-
-### 4.2 Create Employee Dockerfile
-
-**File:** `employee/Dockerfile`
-
-```dockerfile
-
-FROM node:11-alpine
-
+CMD ["npm", "run", "start"]dockerfile08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 7/13
+File: employee/Dockerfile
+4.3 Build Docker Images
+4.4 Run Containers with
+Database Configuration
+Retrieve RDS Database Details: From AWS
+Console Ã¢ â€  Ê¼ RDS Ã¢ â€  Ê¼ Databases Ã¢ â€  Ê¼ Note
+Endpoint, Username, Password, and Database
+Name (COFFEE).
+4.5 Verify Container StatusFROM node:11-alpine
 RUN mkdir -p /usr/src/app
-
 WORKDIR /usr/src/app
-
 COPY . .
-
 RUN npm install
-
 EXPOSE 8081
-
-CMD ["npm", "run", "start"]
-
-```
-
-### 4.3 Build Docker Images
-
-```bash
-
+CMD ["npm", "run", "start"]dockerfile
 cd customer
-
 docker build --tag customer .
-
 cd ../employee
-
 docker build --tag employee .
-
-docker images
-
-```
-
-### 4.4 Run Containers with Database Configuration
-
-Retrieve **RDS Database Details**: From AWS Console Ã¢â€ â€™ RDS Ã¢â€ â€™ Databases Ã¢â€ â€™ Note Endpoint, Username, Password, and Database Name (COFFEE).
-
-```bash
-
+docker imagesbash
 # Run Customer Container
-
-docker run -d --name customer_1 -p 8080:8080   -e APP_DB_HOST="your-rds-endpoint.us-east-1.rds.amazonaws.com"   -e APP_DB_USER="admin"   -e APP_DB_PASSWORD="lab-password"   -e APP_DB_NAME="COFFEE" customer
-
+docker run -d --name customer_1 -
 # Run Employee Container
-
-docker run -d --name employee_1 -p 8081:8081   -e APP_DB_HOST="your-rds-endpoint.us-east-1.rds.amazonaws.com"   -e APP_DB_USER="admin"   -e APP_DB_PASSWORD="lab-password"   -e APP_DB_NAME="COFFEE" employee
-
-```
-
-### 4.5 Verify Container Status
-
-```bash
-
-docker ps
-
-docker logs customer_1
-
-docker logs employee_1
-
-```
-
----
-
-## Step 5: Testing Microservices
-
-### 5.1 Test Customer Microservice (Read-Only)
-
-```bash
-
-curl http://localhost:8080/
-
-curl http://localhost:8080/suppliers
-
-```
-
-**Expected:**
-
-- Supplier list displays
-
-- No Ã¢â‚¬Å“Add new supplierÃ¢â‚¬Â button
-
-- No edit/delete options
-
-- Administrator link visible
-
-### 5.2 Test Employee Microservice (Admin)
-
-```bash
-
-curl http://localhost:8081/admin/suppliers
-
-```
-
-**Expected:**
-
-- Full admin interface with CRUD features
-
-- Ã¢â‚¬Å“Add new supplierÃ¢â‚¬Â button functional
-
-- Customer home link available
-
-### 5.3 Test Database Connectivity
-
-```bash
-
-docker exec customer_1 node -e "
-
-const mysql = require('mysql');
-
-const connection = mysql.createConnection({
-
-host: process.env.APP_DB_HOST,
-
-user: process.env.APP_DB_USER,
-
-password: process.env.APP_DB_PASSWORD,
-
-database: process.env.APP_DB_NAME
-
-});
-
-connection.connect(err => {
-
-if (err) console.log('Database connection failed:', err.message);
-
-else console.log('Database connected successfully');
-
-connection.end();
-
-});
-
-"
-
-```
-
----
-
-## Step 6: Prepare for ECS Deployment
-
-### 6.1 Standardize Employee Port
-
-**File:** `employee/index.js`
-
-```javascript
-
-const app_port = process.env.APP_PORT || 8080;
-
-```
-
-**File:** `employee/Dockerfile`
-
-```dockerfile
-
-EXPOSE 8080
-
-```
-
-### 6.2 Rebuild Employee Image
-
-```bash
-
-cd employee
-
-docker build --tag employee .
-
-```
-
----
-
-## Step 7: Commit and Push Changes
-
-```bash
-
-git status
-
-git diff
-
-git add .
-
-git commit -m "feat: Complete microservices decomposition - Customer: read-only, port 8080 - Employee: /admin routes, CRUD enabled, port 8080 - Added Dockerfiles for both services - Tested containers locally and prepared for ECS deployment"
-
-git push origin dev
-
-```
-
----
-
-## Troubleshooting
-
-| Issue | Solution |
-
-|--------|-----------|
-
-| **Database connection failed** | Check container logs and verify environment variables |
-
-| **Port conflicts** | Stop and remove existing containers: `docker stop customer_1 employee_1 && docker rm customer_1 employee_1` |
-
-| **Application errors** | Check logs with `docker logs customer_1` or test endpoints using `curl` |
-
-| **Missing dependencies** | Rebuild with `docker build --no-cache --tag customer .` |
-
----
-
-## Conclusion
-
-### Achievements
-
-Ã¢Å“â€¦ Decomposed monolithic app into two microservices
-
-Ã¢Å“â€¦ Implemented clear separation of concerns (read-only vs read-write)
-
-Ã¢Å“â€¦ Containerized both services using Docker
-
-Ã¢Å“â€¦ Verified database connectivity
-
-Ã¢Å“â€¦ Prepared both microservices for ECS deployment
-
-### Architecture Summary
-
-| Component | Port | Function |
-
-|------------|------|-----------|
-
-| Customer Microservice | 8080 | Read-only operations |
-
-| Employee Microservice | 8080 | Full CRUD under /admin path |
-
-| Shared Database | - | AWS RDS MySQL instance |
-
-| Deployment | - | Docker containers, ECS-ready |
-
----
-
-### Next Steps
-
-- Push Docker images to **Amazon ECR**
-
-- Deploy microservices to **Amazon ECS**
-
-- Configure **Application Load Balancer**
-
-- Set up **service discovery and auto-scaling**
-
-> This microservices foundation enables scalability, independent deployment, and a unified user experience.
+docker run -d --name employee_1 -bash08/11/2025, 20:40 My Lab Manual
+https://laudcharlesochei.github.io/aws-course-lab-manual/#/lab-07-5/ 8/13
+Step 5: Testing
+Microservices
+5.1 Test Customer
+Microservice (Read-Only)
+Expected:
+Supplier list displays
+No "Add new supplierÃ¢â‚¬
