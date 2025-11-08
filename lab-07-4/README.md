@@ -9,9 +9,6 @@
 
 This lab guides students through creating a GitHub Codespaces development environment, transferring a monolithic application directly from AWS EC2 into a structured microservices architecture, and setting up version control with Git. Students will create separate customer and employee microservices directories using identical starter code and test the applicationâ€™s functionality in a cloud environment.
 
-- **Duration:** 30â€“45 minutes  
-- **Difficulty:** Intermediate  
-
 ---
 
 ## Prerequisites
