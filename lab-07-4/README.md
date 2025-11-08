@@ -60,7 +60,7 @@ By the end of this lab, you should be able to:
 
 #### Step 1.1.2: Launch GitHub Codespace
 
-1. In your repository, click "Code" → "Codespaces" tab In your repository, click **â€œCodeâ€ â†’ â€œCodespacesâ€ tab â†’ â€œCreate codespace on main.â€**  
+1. In your repository, click "Code" → "Codespaces" tab  
 2. Wait for provisioning (2 - 3 minutes).  
    VS Code interface will open in your browser.  
 3. Verify the environment:
@@ -95,7 +95,7 @@ EOF
 
 # Set secure permissions
 chmod 600 ~/.ssh/labsuser.pem
-echo "âœ… SSH key configured"
+echo "✅ SSH key configured"
 ```
 
 ---
@@ -108,7 +108,7 @@ mkdir -p microservices/customer
 mkdir -p microservices/employee
 
 # Verify structure
-echo "âœ… Microservices directory structure created:"
+echo "✅ Microservices directory structure created:"
 tree microservices -L 2
 ```
 
@@ -120,11 +120,11 @@ tree microservices -L 2
 
 ```bash
 # Transfer monolithic code directly to customer directory
-echo "ðŸ“¦ Transferring code to customer microservice..."
+echo "Transferring code to customer microservice..."
 scp -r -i ~/.ssh/labsuser.pem ubuntu@YOUR_EC2_IP:/home/ubuntu/resources/codebase_partner/* microservices/customer/
 
 # Verify transfer
-echo "âœ… Customer microservice files transferred:"
+echo "Total files in customer: $(find microservices/customer -type f | wc -l)"
 ls -la microservices/customer/ | head -10
 ```
 
@@ -137,8 +137,13 @@ ls -la microservices/customer/ | head -10
 cp -r microservices/customer/* microservices/employee/
 
 # Verify identical structure
-echo "âœ… Employee microservice files copied:"
+echo "Employee microservice files copied:"
 ls -la microservices/employee/ | head -10
+
+# Final verification
+echo "inal file counts:"
+echo "Customer: $(find microservices/customer -type f | wc -l) files"
+echo "Employee: $(find microservices/employee -type f | wc -l) files"
 ```
 
 ---
@@ -153,9 +158,9 @@ for service in customer employee; do
     echo "--- $service microservice ---"
     for file in "${critical_files[@]}"; do
         if [ -f "microservices/$service/$file" ]; then
-            echo "âœ… $file"
+            echo "$file"
         else
-            echo "âŒ $file - MISSING"
+            echo "$file - MISSING"
         fi
     done
     echo ""
@@ -206,8 +211,8 @@ for service in customer employee; do
       database: config.DB
     });
     connection.connect(err => {
-      if (err) console.error('âŒ Connection failed:', err.message);
-      else console.log('âœ… Connected successfully');
+      if (err) console.error('Connection failed:', err.message);
+      else console.log('Connected successfully');
       connection.end();
     });
     "
@@ -243,7 +248,7 @@ app.get('/suppliers', suppliers.findAll);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`âœ… CUSTOMER MICROSERVICE running on port ${PORT}`);
+  console.log(`CUSTOMER MICROSERVICE running on port ${PORT}`);
 });
 EOF
 ```
@@ -394,9 +399,10 @@ find microservices -name "*.js" | wc -l
 
 ```
 microservices/
-â”œâ”€â”€ customer/     # Port 8080 - Read-only customer portal
-â””â”€â”€ employee/     # Port 8081 - Full admin employee portal
-    â””â”€â”€ Shared AWS RDS MySQL Database
+├── customer/     # Port 8080 - Read-only customer portal
+└── employee/     # Port 8081 - Full admin employee portal
+    └── Shared RDS MySQL Database
+
 ```
 
 ---
