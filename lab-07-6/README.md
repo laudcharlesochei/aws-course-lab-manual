@@ -195,32 +195,89 @@ module.exports = Supplier;
 </nav>
 ```
 
+### 3.3 Update Supplier List View (Read-Only)
+- Remove â€œAdd new supplierâ€ button  
+- Remove edit/delete options  
+- Keep only the supplier display table
+
 ---
 
 ## Step 4: Modify Employee Microservice (Admin Functions)
+
+### 4.1 Update Employee Controller
+**File:** `employee/app/controller/supplier.controller.js`  
+Update all redirect calls to use `/admin` prefix:
+```javascript
+// Change all redirects from:
+res.redirect("/suppliers");
+// To:
+res.redirect("/admin/suppliers");
+```
+
+### 4.2 Update Employee Routes
 **File:** `employee/index.js`
 ```javascript
 require('dotenv').config();
 const express = require("express");
+// ... other imports
 
-app.get("/admin", (req, res) => res.render("home", {}));
+// ADD /admin PREFIX TO ALL ROUTES
+app.get("/admin", (req, res) => {
+    res.render("home", {});
+});
+
 app.get("/admin/suppliers/", supplier.findAll);
-app.get("/admin/supplier-add", (req, res) => res.render("supplier-add", {}));
+app.get("/admin/supplier-add", (req, res) => {
+    res.render("supplier-add", {});
+});
 app.post("/admin/supplier-add", supplier.create);
 app.get("/admin/supplier-update/:id", supplier.findOne);
 app.post("/admin/supplier-update", supplier.update);
 app.post("/admin/supplier-remove/:id", supplier.remove);
 
+// Update port
 const app_port = process.env.APP_PORT || 8081;
 app.listen(app_port, () => {
     console.log(`Coffee suppliers employee microservice is running on port ${app_port}.`);
 });
 ```
 
+### 4.3 Update Employee Views
+Update form actions in HTML files to use `/admin` prefix:
+
+**File:** `employee/views/supplier-add.html`
+```html
+<form action="/admin/supplier-add" method="POST">
+```
+
+**File:** `employee/views/supplier-update.html`
+```html
+<form action="/admin/supplier-update" method="POST">
+<form action="/admin/supplier-remove/{{id}}" method="POST">
+```
+
+### 4.4 Update Employee Navigation
+**File:** `employee/views/nav.html`
+```html
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <img src="/img/espresso.jpg" width="200">
+    <div><a class="navbar-brand page-title" href="/admin">Manage coffee suppliers</a></div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/suppliers">Administrator home</a>
+                <a class="nav-link" href="/admin/suppliers">Suppliers list</a>
+                <a class="nav-link" href="/">Customer home</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+```
+
 ---
 
-## Step 5: Docker Configuration
-### Customer Dockerfile
+## Step 5: Create Docker Containers
+**Customer Dockerfile:**
 ```dockerfile
 FROM node:11-alpine
 RUN mkdir -p /usr/src/app
@@ -231,7 +288,7 @@ EXPOSE 8080
 CMD ["npm", "run", "start"]
 ```
 
-### Employee Dockerfile
+**Employee Dockerfile:**
 ```dockerfile
 FROM node:11-alpine
 RUN mkdir -p /usr/src/app
@@ -242,45 +299,25 @@ EXPOSE 8081
 CMD ["npm", "run", "start"]
 ```
 
-### Build and Run Containers
+---
+
+## Step 6: Test and Verify
 ```bash
-cd /workspaces/your-repo/microservices/customer
-docker build --tag customer .
-
-cd ../employee
-docker build --tag employee .
-
+docker build --tag customer ./customer
+docker build --tag employee ./employee
 docker run -d --name customer_1 -p 8080:8080 --env-file .env customer
 docker run -d --name employee_1 -p 8081:8081 --env-file .env employee
 docker ps
 ```
 
----
-
-## Step 6: Testing and Troubleshooting
-
-- Access in browser via Codespaces:  
-  - Customer: `https://your-codespace-8080.app.github.dev/`  
-  - Employee: `https://your-codespace-8081.app.github.dev/admin`
-
-âœ… Verify supplier list (read-only)  
-âœ… Add/Edit/Delete in admin panel  
-âœ… Database connection verified via logs
-
----
-
-## Step 7: Commit and Push to GitHub
-```bash
-git add .
-git commit -m "feat: Microservices decomposition and Docker setup"
-git push origin main
-```
+Visit:  
+- Customer: `https://your-codespace-8080.app.github.dev/`  
+- Employee: `https://your-codespace-8081.app.github.dev/admin`
 
 ---
 
 ## Conclusion
-âœ… Customer microservice (read-only, port 8080)  
-âœ… Employee microservice (CRUD under /admin, port 8081)  
-âœ… Docker containers tested and functional  
-âœ… Database connected and verified  
-âœ… All updates committed and pushed to GitHub
+âœ… Both microservices configured and containerized  
+âœ… Database connection verified  
+âœ… Admin panel functional with CRUD operations  
+âœ… Code pushed to GitHub ready for ECS deployment
