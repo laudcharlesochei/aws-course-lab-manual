@@ -2,11 +2,10 @@
 
 ## Lab Overview
 
-In this lab, you will transform the monolithic Coffee Suppliers application into two separate microservices  - a **Customer-facing (read-only)** service and an **Employee/Admin (full CRUD)** service.  
-You will containerize both services using Docker and test them locally or in **GitHub Codespaces**.
+In this lab, you will transform the monolithic Coffee Suppliers application into two separate microservices  - a **Customer-facing (read-only)** service and an **Employee/Admin (full CRUD)** service. You will containerize both services using Docker and test them locally or in **GitHub Codespaces**.
 
 Since AWS Cloud9 is no longer available for new users, this lab uses **GitHub Codespaces** as the cloud development environment and **GitHub** for version control.  
-Youâ€™ll also prepare the setup for **Amazon ECS deployment**.
+You will also prepare the setup for **Amazon ECS deployment**.
 
 ---
 
