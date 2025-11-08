@@ -338,8 +338,8 @@ git push origin dev
 |------------|------|-----------|
 | Customer Microservice | 8080 | Read-only operations |
 | Employee Microservice | 8080 | Full CRUD under /admin path |
-| Shared Database | â€” | AWS RDS MySQL instance |
-| Deployment | â€” | Docker containers, ECS-ready |
+| Shared Database | - | AWS RDS MySQL instance |
+| Deployment | - | Docker containers, ECS-ready |
 
 ---
 
