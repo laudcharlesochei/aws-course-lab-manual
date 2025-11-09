@@ -15,8 +15,7 @@ In these final phases, you will configure AWS CodeDeploy and CodePipeline for au
 
 ## Step 1: Create CodeDeploy Application and Deployment Groups
 
-# 1.1 Understand CodeDeploy Components
-## Explanation
+### Understand CodeDeploy Components
 AWS CodeDeploy uses **applications** and **deployment groups** to organize and manage deployments.  
 These components define *what* you deploy and *where* you deploy it.
 
