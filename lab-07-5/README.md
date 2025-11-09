@@ -327,11 +327,11 @@ git push origin dev
 ## Conclusion
 
 ### Achievements
-âœ… Decomposed monolithic app into two microservices  
-âœ… Implemented clear separation of concerns (read-only vs read-write)  
-âœ… Containerized both services using Docker  
-âœ… Verified database connectivity  
-âœ… Prepared both microservices for ECS deployment
+Decomposed monolithic app into two microservices  
+Implemented clear separation of concerns (read-only vs read-write)  
+Containerized both services using Docker  
+Verified database connectivity  
+Prepared both microservices for ECS deployment
 
 ### Architecture Summary
 | Component | Port | Function |
@@ -342,11 +342,5 @@ git push origin dev
 | Deployment | - | Docker containers, ECS-ready |
 
 ---
-
-### Next Steps
-- Push Docker images to **Amazon ECR**
-- Deploy microservices to **Amazon ECS**
-- Configure **Application Load Balancer**
-- Set up **service discovery and auto-scaling**
 
 > This microservices foundation enables scalability, independent deployment, and a unified user experience.
