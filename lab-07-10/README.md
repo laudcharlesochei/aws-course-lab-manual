@@ -15,6 +15,36 @@ In these final phases, you will configure AWS CodeDeploy and CodePipeline for au
 
 ## Step 1: Create CodeDeploy Application and Deployment Groups
 
+# 1.1 Understand CodeDeploy Components
+## Explanation
+AWS CodeDeploy uses **applications** and **deployment groups** to organize and manage deployments.  
+These components define *what* you deploy and *where* you deploy it.
+
+### Application
+- A **logical container** for your deployment components.  
+- It represents the overall deployment configuration for your service or microservice.  
+- Each application can have one or more deployment groups associated with it.
+
+### Deployment Group
+- Defines **where** and **how** the application is deployed.  
+- Specifies:
+  - Target ECS services or EC2 instances  
+  - Load balancer or target group configuration  
+  - Deployment type (e.g., Blue/Green or In-Place)  
+  - Auto rollback and traffic control settings  
+
+> **Example:**  
+> - *Application:* `microservices`  
+> - *Deployment Group:* `microservices-customer` (targets the customer ECS service)
+
+
+
+
+
+
+
+
+
 ### 1.1 Create CodeDeploy Application
 ```bash
 # Create CodeDeploy application for ECS
