@@ -27,7 +27,7 @@ By completing this lab, you will be able to:
 #### Step 2: Download SSH Key
 1. In AWS Academy Lab interface, find **"AWS Details"** panel
 2. Click **"labsuser.pem"** to download the SSH key
-3. Save to secure location: `D:\MicroserviceApplications\microservice_aws\.ssh\`
+3. Save to secure location (replace with location applicable to your machine): `D:\MicroserviceApplications\microservice_aws\.ssh\`
 
 ### Task 1.2: Configure SSH Access
 
