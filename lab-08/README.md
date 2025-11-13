@@ -1,4 +1,4 @@
-# Lab 07-3: Creating a Development Environment and Git Repository in GitHub Codespaces
+# Lab 08: Creating a Development Environment and Git Repository in GitHub Codespaces
 
 ## Lesson Title
 **AWS to GitHub Codespaces Migration: Direct Code Transfer and Microservices Setup**
