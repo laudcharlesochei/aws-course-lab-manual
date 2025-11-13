@@ -427,5 +427,3 @@ microservices/
 ---
 
 > *This lab provides a practical foundation for modern cloud-native development using direct code transfer and structured microservices preparation.*
-
-nt. - **Production Deployment:** Prepare deployment to a service like AWS ECS.
