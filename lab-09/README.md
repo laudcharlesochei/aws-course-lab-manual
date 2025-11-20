@@ -15,32 +15,129 @@ Before beginning, ensure you have:
 
 ---
 
-## Step 1: Environment Setup
+## Step 1: Environment Setup in GitHub Codespaces
 
-### 1.1 Clone Your Repository
+### 1.1 Access GitHub Codespaces
+1. Navigate to your GitHub repository  
+2. Click the **Code** button and select the **Codespaces** tab  
+3. Click **Create codespace on main**  
+4. Wait for the environment to initialize
+
+### 1.2 Verify Development Environment
 ```bash
-git clone https://github.com/YOUR_USERNAME/coffee-suppliers-microservices.git
-cd coffee-suppliers-microservices
+# Check Node.js and npm versions
+node --version
+npm --version
+
+# Verify Git configuration
+git config --list
 ```
 
-### 1.2 Open in VS Code or Codespaces
-- **Option A (Local):** Open the folder in VS Code.
-- **Option B (Codespaces):** Create a new codespace from your GitHub repository.
+### 1.3 Upload Project Files to Codespaces
+- In Codespaces File Explorer, right-click and select **Upload**
+- Select your project files/folders from your local machine
+- Alternatively, drag and drop files directly into the file explorer
 
-### 1.3 Verify Project Structure
+Verify file structure:
 ```
 microservices/
 ├── customer/
 │   ├── app/
 │   ├── views/
-│   ├── index.js
 │   └── package.json
 └── employee/
     ├── app/
     ├── views/
-    ├── index.js
     └── package.json
 ```
+
+---
+
+## Step 2: Database Configuration
+
+### 1.4 Database Configuration - Option A: Connect to AWS RDS Database
+```bash
+sudo apt update
+sudo apt install mysql-client -y
+
+# Test RDS connection
+mysql -h YOUR_RDS_ENDPOINT -u admin -p -e "SHOW DATABASES;"
+# Password: lab-password
+```
+
+### 1.5 Database Configuration - Option B: Set Up Local MySQL Database
+```bash
+sudo apt update
+sudo apt install mysql-server -y
+
+sudo service mysql start
+sudo systemctl enable mysql
+
+sudo mysql -u root << 'EOF'
+CREATE DATABASE COFFEE;
+CREATE USER 'coffee_user'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON COFFEE.* TO 'coffee_user'@'localhost';
+FLUSH PRIVILEGES;
+
+USE COFFEE;
+CREATE TABLE suppliers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(50),
+    description TEXT,
+    address VARCHAR(255),
+    city VARCHAR(100),
+    state VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO suppliers (name, email, phone, description, address, city, state) VALUES
+('Mountain Coffee Co.', 'contact@mountaincoffee.com', '555-0101', 'Organic mountain-grown beans', '123 Mountain Rd', 'Denver', 'CO'),
+('Valley Roasters', 'info@valleyroasters.com', '555-0102', 'Premium dark roast specialists', '456 Valley Ave', 'Seattle', 'WA'),
+('Urban Brew', 'sales@urbanbrew.com', '555-0103', 'Fair trade urban coffee', '789 City St', 'Portland', 'OR');
+EOF
+```
+
+### 1.6 Configure Environment Variables
+Create `.env` files for both microservices:
+
+**Customer Microservice (.env):**
+```bash
+cd /workspaces/your-repo/microservices/customer
+cat > .env << 'EOF'
+APP_DB_HOST=localhost
+APP_DB_USER=coffee_user
+APP_DB_PASSWORD=password
+APP_DB_NAME=COFFEE
+APP_PORT=8080
+EOF
+```
+
+**Employee Microservice (.env):**
+```bash
+cd ../employee
+cat > .env << 'EOF'
+APP_DB_HOST=localhost
+APP_DB_USER=coffee_user
+APP_DB_PASSWORD=password
+APP_DB_NAME=COFFEE
+APP_PORT=8081
+EOF
+```
+
+---
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
