@@ -420,8 +420,3 @@ Prepared both microservices for ECS deployment
 | Employee Microservice | 8080 | Full CRUD under /admin path |
 | Shared Database | - | AWS RDS MySQL instance |
 | Deployment | - | Docker containers, ECS-ready |
-
----
-
-> This microservices foundation enables scalability, independent deployment, and a unified user experience.
-
