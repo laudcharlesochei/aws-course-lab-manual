@@ -52,9 +52,6 @@ microservices/
 ```
 
 ---
-
-## Step 2: Database Configuration
-
 ### 1.4 Database Configuration - Option A: Connect to AWS RDS Database
 ```bash
 sudo apt update
@@ -125,20 +122,6 @@ APP_DB_NAME=COFFEE
 APP_PORT=8081
 EOF
 ```
-
----
-
-
-
-
-
-
-
-
-
-
-
-
 ---
 
 ## Step 2: Modify Customer Microservice (Read-Only)
