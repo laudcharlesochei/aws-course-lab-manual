@@ -1,4 +1,4 @@
-# Phase 5: Creating ECR Repositories, ECS Cluster, Task Definitions, and AppSpec Files
+# Lab 10: Creating ECR Repositories, ECS Cluster, Task Definitions, and AppSpec Files
 
 ## Lab Overview
 In this phase, you will prepare your microservices for production deployment by creating Amazon ECR repositories for Docker images, setting up an ECS cluster, defining task configurations, and creating deployment specifications.  
@@ -259,16 +259,11 @@ aws ecs list-task-definitions --status ACTIVE --region $AWS_REGION
 ---
 
 ## Conclusion
-âœ… Created and configured ECR repositories  
-âœ… Pushed Docker images to ECR  
-âœ… Built ECS Fargate cluster  
-âœ… Defined and registered ECS task definitions  
-âœ… Created AppSpec files for CodeDeploy  
-âœ… Prepared CI/CD configurations in GitHub
+- Created and configured ECR repositories  
+-  Pushed Docker images to ECR  
+-  Built ECS Fargate cluster  
+-  Defined and registered ECS task definitions  
+-  Created AppSpec files for CodeDeploy  
+-  Prepared CI/CD configurations in GitHub
 
-### Next Steps
-- Create ECS services for both microservices  
-- Configure Application Load Balancer  
-- Deploy services to ECS cluster  
-- Validate end-to-end system functionality
 
